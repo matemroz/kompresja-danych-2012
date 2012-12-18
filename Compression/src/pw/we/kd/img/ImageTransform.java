@@ -7,16 +7,13 @@ public class ImageTransform {
 	
 	public static void main(String[] args) {
 		GrayScaleImage img = new GrayScaleImage("lenagray.bmp");
-		Haar haar = new Haar();
-		Daub d = new Daub();
-		//d.transform(img, 0, img.getHeight());
+		Daub daub= new Daub();
 		double[][] mat = img.getData();
-	//	d.transform(mat);
-		img.save("lenka_d4");
-	//	d.invDaubTrans(mat);
-		img.save("lenka_d4_inv.bmp");
-		//d.invTransform(img, 0, img.getHeight());
-		//haar.invTransform(img, 2);
-		//img.save("lenka_inv.bmp");
+		daub.transform(mat, 256, 64);
+		img.setData(mat);
+		img.save("lenka_tr.bmp");
+		daub.invTransform(mat, 64, 256);
+		img.setData(mat);
+		img.save("lenka_inv.bmp");
 	}
 }
