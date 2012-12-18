@@ -31,10 +31,10 @@ public class GrayScaleImage extends Image {
 	public GrayScaleImage(String path) {
 		super(path);
 		Raster raster = this.bfImg.getData();
-		this.data = new double[this.height][this.width];
-		for (int i = 0; i < this.height; i++) {
-			for (int j = 0; j < this.width; j++) {
-				this.data[i][j] = raster.getSampleDouble(i, j, 0);
+		this.data = new double[this.width][this.height];
+		for (int i = 0; i < this.width; i++) {
+			for (int j = 0; j < this.height; j++) {
+				this.data[i][j] = raster.getSample(i, j, 0);
 			}
 		}
 	}

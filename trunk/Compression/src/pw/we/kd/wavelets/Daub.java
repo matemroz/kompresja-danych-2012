@@ -1,5 +1,7 @@
 package pw.we.kd.wavelets;
 
+import pw.we.kd.img.GrayScaleImage;
+
 public class Daub {
 
 	public static final double H0 = (1 + Math.sqrt(3)) / (4 * Math.sqrt(2));
@@ -42,7 +44,7 @@ public class Daub {
 					+ line[1] * G3;
 
 			for (i = 0; i < n; i++) {
-				line[i] = a[i];
+				line[i] = Math.round(a[i]);
 			}
 		}
 	}
@@ -67,7 +69,7 @@ public class Daub {
 						* IG2 + line[i + hp] * IG3;
 			}
 			for (i = 0; i < n; i++) {
-				line[i] = a[i];
+				line[i] = Math.round(a[i]);
 			}
 		}
 	}
@@ -77,40 +79,74 @@ public class Daub {
 		if(start < end){
 			System.err.println("Podano niepoprawne dane wejsciowe: start < end");
 		}
+		
+		/*ROWS*/
 		for (n = start; n >= end; n=n/2) {
 			for (int i = 0; i < n; i++) {
 				forward(mat[i], n);
 			}
 		}
-	}
 
+		/*COLS*/
+		/*double[] column = new double[1];
+		for (int i = 0; i < this.height; i++) {
+			if (i == index) {
+				for (int j = 0; j < this.width; j++) {
+					column[j] = this.data[i][j];
+				}
+			}
+		}*/
+		
+		/*COLS
+		for (n = start; n >= end; n=n/2) {
+			for (int i = 0; i < n; i++) {
+				forward(mat[i], n);
+			}
+		}*/
+	}
+	
 	public void invTransform(double mat[][], int start, int end) {
 		int n;
 		if(start > end){
 			System.err.println("Podano niepoprawne dane wejsciowe: start > end");
 		}
+		
+		/*ROW*/
 		for (n = start; n <= end; n=n*2) {
 			for (int i = 0; i < n; i++) {
 				backward(mat[i], n);
 			}
 		}
+		/*COLS*/
 	}
-
+	
 	public static void main(String[] args) {
-		double S[][] = { { 64, 2, 3, 61, 60, 6, 7, 57 },
+		double S[][] = { 
+				{ 64, 2, 3, 61, 60, 6, 7, 57 },
 				{ 9, 55, 54, 12, 13, 51, 50, 16 },
 				{ 17, 47, 46, 20, 21, 43, 42, 24 },
 				{ 40, 26, 27, 37, 36, 30, 31, 33 },
 				{ 32, 34, 35, 29, 28, 38, 39, 25 },
 				{ 41, 23, 22, 44, 45, 19, 18, 48 },
 				{ 49, 15, 14, 52, 53, 11, 10, 56 },
-				{ 8, 58, 59, 5, 4, 62, 63, 1 } };
+				{ 8, 58, 59, 5, 4, 62, 63, 1 } 
+			};
 
 
 		Daub d = new Daub();
 		d.transform(S, 8, 2);
+		
+		System.out.println("TRANS");
+		for (int i = 0; i < S.length; i++) {
+			for (int j = 0; j < S[i].length; j++) {
+				System.out.print(S[i][j] + " ");
+			}
+			System.out.println();
+		}
 		d.invTransform(S, 2, 8);
 
+		
+		System.out.println("INV");
 		for (int i = 0; i < S.length; i++) {
 			for (int j = 0; j < S[i].length; j++) {
 				System.out.print(S[i][j] + " ");
