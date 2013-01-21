@@ -19,6 +19,7 @@ public class Image {
 			this.type = bfImg.getType();
 			this.width = bfImg.getWidth();
 			this.height = bfImg.getHeight();
+			System.out.println("type: " + this.type + " " + this.width + " " + this.height);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
