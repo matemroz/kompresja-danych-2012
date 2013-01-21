@@ -41,11 +41,10 @@ public class CompressionView extends JFrame {
 		String waveletType[] = { "haar", "daubechie" };
 		waveletCB = new JComboBox(waveletType);
 		waveletCB.setBounds(390, 80, 120, 30);
-		String startType[] = { "256", "128", "64", "32", "16", "8", "4", "2",
-				"1" };
+		String startType[] = { "256", "128", "64", "32", "16"};
 		startCB = new JComboBox(startType);
 		startCB.setBounds(390, 120, 120, 30);
-		String endType[] = { "1", "2", "4", "8", "16", "32", "64", "128", "256" };
+		String endType[] = {"16", "32", "64", "128", "256",};
 		endCB = new JComboBox(endType);
 		endCB.setBounds(390, 160, 120, 30);
 		compressionDegreeSlider = new JSlider(JSlider.HORIZONTAL, 1, 4, 1);
