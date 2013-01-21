@@ -113,8 +113,7 @@ public class GrayScaleImage extends Image {
 
 	public void save(String filename) {
 		try {
-			BufferedImage trImage = new BufferedImage(this.width, this.height,
-					this.type);
+			BufferedImage trImage = new BufferedImage(this.width, this.height, this.type);
 			WritableRaster wrRaster = trImage.getRaster();
 			for (int i = 0; i < this.width; i++) {
 				for (int j = 0; j < this.height; j++) {

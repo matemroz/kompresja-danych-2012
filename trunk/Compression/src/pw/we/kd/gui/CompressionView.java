@@ -77,7 +77,7 @@ public class CompressionView extends JFrame {
 			e.printStackTrace();
 		}
 		setVisible(true);
-		revalidate();
+		//revalidate();
 		repaint();
 	}
 
@@ -116,44 +116,41 @@ public class CompressionView extends JFrame {
 				int end = Integer.parseInt(endCB.getSelectedItem().toString());
 				if (processType.equals("transformation")
 						&& waveletTransType.equals("haar")) {
-					GrayScaleImage img = new GrayScaleImage("lenagray.bmp");
-					double[][] mat = img.getData();
+					imgHaar = new GrayScaleImage("lenagray.bmp");
+					double[][] mat = imgHaar.getData();
 					haar.transform(mat, start, end);
 					String outputFilename = "lenagray_tr.bmp";
-					img.save(outputFilename);
+					imgHaar.save(outputFilename);
 					addImage(outputFilename, imgPanelRight, 590, 100, 256, 256);
 					System.out.println("transformacja: haar");
 				} else if (processType.equals("transformation")
 						&& waveletTransType.equals("daubechie")) {
-					GrayScaleImage img = new GrayScaleImage("lenagray.bmp");
-					double[][] mat = img.getData();
+					imgDaub = new GrayScaleImage("lenagray.bmp");
+					double[][] mat = imgDaub.getData();
 					daub.transform(mat, start, end);
 					String outputFilename = "lenagray_daub_tr.bmp";
-					img.save(outputFilename);
+					imgDaub.save(outputFilename);
 					addImage(outputFilename, imgPanelRight, 590, 100, 256, 256);
 					System.out.println("transformacja: daubechie");
 				} else if (processType.equals("inversion")
 						&& waveletTransType.equals("haar")) {
-					GrayScaleImage img = new GrayScaleImage("lenagray_tr.bmp");
-					double[][] mat = img.getData();
+					imgHaar = new GrayScaleImage("lenagray_tr.bmp");
+					double[][] mat = imgHaar.getData();
 					haar.invTransform(mat, start, end);
 					String outputFilename = "lenagray_inv.bmp";
-					img.save(outputFilename);
+					imgHaar.save(outputFilename);
 					addImage(outputFilename, imgPanelLeft, 50, 100, 256, 256);
 					System.out.println("inwersja: haar");
 				} else if (processType.equals("inversion")
 						&& waveletTransType.equals("daubechie")) {
-					GrayScaleImage img = new GrayScaleImage(
-							"lenagray_daub_tr.bmp");
-					double[][] mat = img.getData();
+					double[][] mat = imgDaub.getData();
 					daub.invTransform(mat, start, end);
 					String outputFilename = "lenagray_daub_inv.bmp";
-					img.save(outputFilename);
+					imgDaub.save(outputFilename);
 					addImage(outputFilename, imgPanelLeft, 50, 100, 256, 256);
 					System.out.println("inwersja: daubechie");
 				} else {
-					System.err
-							.println("Chosen inappropriate process configuration");
+					System.err.println("Chosen inappropriate process configuration");
 				}
 			}
 		}
@@ -177,4 +174,6 @@ public class CompressionView extends JFrame {
 	private JComboBox startCB;
 	private JComboBox endCB;
 	private JSlider compressionDegreeSlider;
+	private GrayScaleImage imgHaar;
+	private GrayScaleImage imgDaub;
 }
