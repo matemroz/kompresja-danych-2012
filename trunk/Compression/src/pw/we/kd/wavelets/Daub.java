@@ -24,7 +24,7 @@ public class Daub {
 		
 		for (int i = 0; i < s.length; i++) {
 			for (int j = 0; j < s[i].length; j++) {
-				s[i][j] = s[i][j] * 0.2;
+				s[i][j] = s[i][j] * end/start * 0.5;
 			}
 		}
 		
@@ -103,7 +103,7 @@ public class Daub {
 		
 		for (int i = 0; i < s.length; i++) {
 			for (int j = 0; j < s[i].length; j++) {
-					s[i][j] = s[i][j] * 10/2;
+					s[i][j] = s[i][j] * end/start * 2;
 			}
 		}
 		final int N = s.length;
