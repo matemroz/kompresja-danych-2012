@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
@@ -47,19 +48,10 @@ public class CompressionView extends JFrame {
 		String endType[] = {"16", "32", "64", "128", "256",};
 		endCB = new JComboBox(endType);
 		endCB.setBounds(390, 160, 120, 30);
-		compressionDegreeSlider = new JSlider(JSlider.HORIZONTAL, 1, 4, 1);
-		compressionDegreeSlider.setMajorTickSpacing(1);
-		compressionDegreeSlider.setMinorTickSpacing(1);
-		compressionDegreeSlider.setPaintTicks(true);
-		compressionDegreeSlider.setPaintLabels(true);
-		compressionDegreeSlider.setBounds(360, 330, 180, 50);
-		Font font = new Font("Serif", Font.ITALIC, 15);
-		compressionDegreeSlider.setFont(font);
 		add(transformBtn);
-		//add(resetBtn);
+		add(resetBtn);
 		add(procTypeCB);
 		add(waveletCB);
-		//add(compressionDegreeSlider);
 		add(startCB);
 		add(endCB);
 		addImage("lenagray.bmp", imgPanelLeft, 50, 100, 256, 256);
@@ -95,7 +87,8 @@ public class CompressionView extends JFrame {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			initUI();
+			dispose();
+			new CompressionView();
 		}
 	}
 
@@ -108,44 +101,42 @@ public class CompressionView extends JFrame {
 			Daub daub = new Daub();
 			if (e.getActionCommand().equals("process")) {
 				String processType = procTypeCB.getSelectedItem().toString();
-				String waveletTransType = waveletCB.getSelectedItem()
-						.toString();
-				int start = Integer.parseInt(startCB.getSelectedItem()
-						.toString());
+				String waveletTransType = waveletCB.getSelectedItem().toString();
+				int start = Integer.parseInt(startCB.getSelectedItem().toString());
 				int end = Integer.parseInt(endCB.getSelectedItem().toString());
 				if (processType.equals("transformation")
 						&& waveletTransType.equals("haar")) {
-					imgHaar = new GrayScaleImage("lenagray.bmp");
-					double[][] mat = imgHaar.getData();
+					img = new GrayScaleImage("lenagray.bmp");
+					double[][] mat = img.getData();
 					haar.transform(mat, start, end);
 					String outputFilename = "lenagray_tr.bmp";
-					imgHaar.save(outputFilename);
+					img.save(outputFilename);
 					addImage(outputFilename, imgPanelRight, 590, 100, 256, 256);
 					System.out.println("transformacja: haar");
 				} else if (processType.equals("transformation")
 						&& waveletTransType.equals("daubechie")) {
-					imgDaub = new GrayScaleImage("lenagray.bmp");
-					double[][] mat = imgDaub.getData();
+					img = new GrayScaleImage("lenagray.bmp");
+					double[][] mat = img.getData();
 					daub.transform(mat, start, end);
 					String outputFilename = "lenagray_daub_tr.bmp";
-					imgDaub.save(outputFilename);
+					img.save(outputFilename);
 					addImage(outputFilename, imgPanelRight, 590, 100, 256, 256);
 					System.out.println("transformacja: daubechie");
 				} else if (processType.equals("inversion")
 						&& waveletTransType.equals("haar")) {
-					imgHaar = new GrayScaleImage("lenagray_tr.bmp");
-					double[][] mat = imgHaar.getData();
+					img = new GrayScaleImage("lenagray_tr.bmp");
+					double[][] mat = img.getData();
 					haar.invTransform(mat, start, end);
 					String outputFilename = "lenagray_inv.bmp";
-					imgHaar.save(outputFilename);
+					img.save(outputFilename);
 					addImage(outputFilename, imgPanelLeft, 50, 100, 256, 256);
 					System.out.println("inwersja: haar");
 				} else if (processType.equals("inversion")
 						&& waveletTransType.equals("daubechie")) {
-					double[][] mat = imgDaub.getData();
+					double[][] mat = img.getData();
 					daub.invTransform(mat, start, end);
 					String outputFilename = "lenagray_daub_inv.bmp";
-					imgDaub.save(outputFilename);
+					img.save(outputFilename);
 					addImage(outputFilename, imgPanelLeft, 50, 100, 256, 256);
 					System.out.println("inwersja: daubechie");
 				} else {
@@ -173,6 +164,8 @@ public class CompressionView extends JFrame {
 	private JComboBox startCB;
 	private JComboBox endCB;
 	private JSlider compressionDegreeSlider;
-	private GrayScaleImage imgHaar;
-	private GrayScaleImage imgDaub;
+	private GrayScaleImage img;
+	private JLabel crLabel;
+	private JLabel crText;
+	
 }
